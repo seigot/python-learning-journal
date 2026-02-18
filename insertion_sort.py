@@ -10,4 +10,4 @@ messy = [4, 2, 5, 1, 3, 9, 10]
 print(insertionSort(messy))
 #    - Best Case:    O(n) : already sorted; inner while loop runs once per element
 #    - Average Case: O(n^2)
-#    - Worst Case:   O(n^2)
+#    - Worst Case:   O(n^2)z
