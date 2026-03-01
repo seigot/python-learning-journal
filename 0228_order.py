@@ -9,12 +9,13 @@
 ## ################### ##
 
 # --------------------------------------------- #
-# Order class with inheritance + polymorphism.  #
+# Order class with inheritance + polymorphism.
 # 
-# order_id  : 
-# menu_id   : 
-# item_name : 
-# price     : 
+# order_id  : Order identifier. A sequential number assigned in the customer orders arrive. 
+# menu_id   : Identifier of the menu item associated with the order_id. 
+#             The definitions are listed in the menu list.
+# item_name : Name of the item associated with the menu_id.
+# price     : Price of the item associated with the menu_id.
 # --------------------------------------------- #
 class Order:
     def __init__(self, order_id, menu_id, item_name, price):
@@ -194,7 +195,7 @@ def main():
         moved_order = waiting_queue.dequeue()
         if moved_order is not None:
             active_kitchen.append(moved_order)
-            moved_summary = f"Successfully move the order from the queue to kitchen list, dequeued id={moved_order.order_id}"
+            moved_summary = f"[Success] move the order from the queue to kitchen list, dequeued id={moved_order.order_id}"
 
         # -------------------------
         #  3.Process prep steps using the stack
@@ -206,7 +207,9 @@ def main():
             while not current.is_complete():
                 step = current.process_step()
                 result.append(step)
-            cook_summary = f"Successfully processed prep steps, cur id={current.order_id} step={result}"
+            # step = current.process_step()
+            # result.append(step)
+            cook_summary = f"[Success] processed prep steps, cur id={current.order_id} step={result}"
 
         # -------------------------
         #  4.Mark finished orders as complete and move them to the completed orders list
@@ -222,7 +225,7 @@ def main():
                     dinein_count += 1
                 else:
                     takeout_count += 1
-                done_summary = (f"Successfully completed orders id={done.order_id} revenue+={done.price:.2f}")
+                done_summary = (f"[Success] completed orders id={done.order_id} revenue+={done.price:.2f}")
 
         # -------------------------
         # 5.Print a status log for that time step
@@ -231,13 +234,12 @@ def main():
         print(f"----- [Cycle: {t}] -----")
         print(f"ORDER SUMMARY: {order_summary}")
         print(f"CUSTOMER ORDER : {arrived_summary}")
-        print(f"MOVE    : {moved_summary}")
-        print(f"COOK    : {cook_summary}")
-        print(f"DONE    : {done_summary}")
-        print(f"          The number of completed orders is :{len(completed_orders)}")
+        print(f"  --> {moved_summary}")
+        print(f"  --> {cook_summary}")
+        print(f"  --> {done_summary}")
+        print(f"The number of completed orders is : {len(completed_orders)}")
         print()
-        if t < len(arrivals):
-            input("Press Enter to continue to next step...")
+        input("Press Enter to continue to next step...")
 
     # Ptint Summary
     print("==============================")
