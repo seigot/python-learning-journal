@@ -20,11 +20,23 @@ def insertion_sort_cards(arr):
 #RANKS_ORDER = ["2", "3", "4", "5", "6", "7", "8",
 #               "9", "10", "J", "Q", "K", "A"]
 #deck = [(suit, rank) for suit in SUITS_ORDER for rank in RANKS_ORDER]
+trans = {
+    "clubs": 100,
+    "diamonds": 200,
+    "hearts": 300,
+    "spades": 400
+}
 
 # In this implementation, all cards are assumed to be numeric. 
 # If alphabetic characters are included, a mapping table would be required.
 RANKS_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-deck = [(rank) for rank in RANKS_ORDER]
+#deck = [(rank) for rank in RANKS_ORDER]
+deck = []
+for v in ["clubs","diamonds", "hearts", "spades"]:
+    vv = trans[v]
+    for i in RANKS_ORDER:
+        deck.append(vv+i)
+
 random.shuffle(deck)
 
 # initialize Hand. Fist of all we have blank list.
@@ -59,3 +71,8 @@ while True:
     print("hand:",hand)
 
 print("End of Process.")
+
+print("Edge case.")
+# Empty array
+arr = []
+insertion_sort_cards(arr)
