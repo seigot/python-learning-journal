@@ -31,9 +31,15 @@ class Order:
         return self.prep_stack.pop()
     def is_complete(self):
         return self.prep_stack.is_empty()
+# DineInOrder class
+# This class inherits from the Order class and demonstrates polymorphism.
+# It represents the preparation steps for a dine-in order: cook, plate, and serve.
 class DineInOrder(Order):
     def prep_steps(self):
         return ["cook", "plate", "serve"]
+# TakeoutOrder class
+# This class inherits from the Order class and demonstrates polymorphism.
+# It represents the preparation steps for a takeout order: cook and pack.
 class TakeoutOrder(Order):
     def prep_steps(self):
         return ["cook", "pack"]
