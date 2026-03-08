@@ -189,67 +189,76 @@ def main():
     takeout_count = 0
     revenue       = 0.0
 
-    next_order_id = 1
-    for t, order in enumerate(arrivals, start=1):
+    max_time_steps = len(arrivals)*3 # Enough time to simulate time step.
 
-        order_summary = (f"id={order.order_id} item={order.item_name} price={order.price:.2f}")
-        # -------------------------
-        # 1.Add arriving customers/orders to the queue
-        # -------------------------
-        waiting_queue.enqueue(order)
-        arrived_summary = (f"Successfully add customer order to the queue")
+    print("===== Restaurant Simulation Start =====")
+    for t in range(max_time_steps):
+        print(f"===== [Time Step: {t+1}/{max_time_steps}] =====")
 
         # -------------------------
-        # 2.Move the next waiting order from the queue into the active kitchen linked list
+        # 1. Add arriving customers/orders to the queue
         # -------------------------
-        moved_summary = "none"
+        if t < len(arrivals):
+            order = arrivals[t]
+            order_summary = f"id={order.order_id} item={order.item_name} price={order.price:.2f}"
+            waiting_queue.enqueue(order)
+            print("[1.][SUCCESS] add customer order to the queue", order_summary)
+        else:
+            print("[1.][INFO] no new customer order arrived")
+
+        # -------------------------
+        # 2. Move the next waiting order from the queue into the active kitchen linked list
+        # -------------------------
         moved_order = waiting_queue.dequeue()
         if moved_order is not None:
             active_kitchen.append(moved_order)
-            moved_summary = f"[Success] move the order from the queue to kitchen list, dequeued id={moved_order.order_id}"
+            print(f"[2.][SUCCESS] move the order from the queue to kitchen list, dequeued id={moved_order.order_id}")
+        else:
+            print("[2.][INFO] no order moved from queue to kitchen")
 
         # -------------------------
-        #  3.Process prep steps using the stack
+        # 3. Process prep steps using the stack
+        #    -> 1 time step で 1 prep step のみ処理
         # -------------------------
-        cook_summary = "none"
         current = active_kitchen.head()
-        if current is not None:
-            result = []
-            while not current.is_complete():
-                step = current.process_step()
-                result.append(step)
-            # step = current.process_step()
-            # result.append(step)
-            cook_summary = f"[Success] processed prep steps, cur id={current.order_id} step={result}"
+        if current is not None and not current.is_complete():
+            step = current.process_step()
+            print(f"[3.][SUCCESS] processed prep step, cur id={current.order_id} step={step}")
+        else:
+            print("[3.][INFO] no active kitchen order to process")
 
         # -------------------------
-        #  4.Mark finished orders as complete and move them to the completed orders list
+        # 4. Mark finished orders as complete and move them to the completed orders list
         # -------------------------
-        done_summary = "none"
+        current = active_kitchen.head()
         if current is not None and current.is_complete():
             done = active_kitchen.remove_head()
             if done is not None:
-                # Successfully completed orders
                 revenue += done.price
-                completed_orders.append(done)                
+                completed_orders.append(done)
                 if isinstance(done, DineInOrder):
                     dinein_count += 1
                 else:
                     takeout_count += 1
-                done_summary = (f"[Success] completed orders id={done.order_id} revenue+={done.price:.2f}")
+
+                print(f"[4.][SUCCESS] completed orders id={done.order_id} revenue+={done.price:.2f}")
+        else:
+            print("[4.][INFO] no completed order this step")
 
         # -------------------------
-        # 5.Print a status log for that time step
+        # 5. Print a status log for that time step
         # -------------------------
-        cur_id = active_kitchen.head().order_id if active_kitchen.head() is not None else "-"
-        print(f"----- [Cycle: {t}] -----")
-        print(f"ORDER SUMMARY: {order_summary}")
-        print(f"CUSTOMER ORDER : {arrived_summary}")
-        print(f"  --> {moved_summary}")
-        print(f"  --> {cook_summary}")
-        print(f"  --> {done_summary}")
-        print(f"The number of completed orders is : {len(completed_orders)}")
-        print()
+        current_head = active_kitchen.head()
+        current_head_id = current_head.order_id if current_head is not None else "-"
+        print("[5.][STATUS] ----- Kitchen Status -----")
+        print(f"[5.][STATUS] waiting_queue size      : {waiting_queue.size()}")
+        print(f"[5.][STATUS] active_kitchen_list size: {active_kitchen.size()}")
+        print(f"[5.][STATUS] current kitchen order   : {current_head_id}")
+        print(f"[5.][STATUS] completed orders count  : {len(completed_orders)}")
+        print(f"[5.][STATUS] 　　dine-in count       : {dinein_count}")
+        print(f"[5.][STATUS] 　　takeout count       : {takeout_count}")
+        print(f"[5.][STATUS] current revenue         : ${revenue:.2f}")
+
         input("Press Enter to continue to next step...")
 
     # Ptint Summary
@@ -261,6 +270,7 @@ def main():
     print(f"Dine-in orders            : {dinein_count}")
     print(f"Takeout orders            : {takeout_count}")
     print(f"Total revenue             : ${revenue:.2f}")
+    return
 
 if __name__ == "__main__":
     main()
