@@ -147,9 +147,9 @@ class QueueLinkedList:
 
 # Menu list: Store the menu.
 menu = [
-        (1, "Burger", 12.00),
-        (2, "Salad",   9.00),
-        (3, "Pizza",  15.00),
+        ("Burger", 12.00), # id: 0
+        ("Salad",   9.00), # id: 1
+        ("Pizza",  15.00), # id: 2
 ]
 # Completed orders list: Store the completed orders.
 completed_orders = []
@@ -171,14 +171,18 @@ waiting_queue  = Queue()
 def main():
 
     # arrival customers
-    arrivals = [
-        # order_id, menu_id, item_name, price
-        DineInOrder(1, 1, "Burger", 12.00),
-        TakeoutOrder(2, 2, "Salad", 9.00),
-        DineInOrder(3, 3, "Pizza", 15.00),
-        TakeoutOrder(4, 1, "Burger", 12.00),
-        DineInOrder(5, 2, "Salad", 9.00),
-    ]
+    arrivals = []
+    # order_id, menu_id, item_name, price
+    menu_id = 0
+    arrivals.append(DineInOrder(1, menu_id, menu[menu_id][0], menu[menu_id][1]))
+    menu_id = 1
+    arrivals.append(TakeoutOrder(2, menu_id, menu[menu_id][0], menu[menu_id][1]))
+    menu_id = 0
+    arrivals.append(DineInOrder(3, menu_id, menu[menu_id][0], menu[menu_id][1]))
+    menu_id = 1
+    arrivals.append(TakeoutOrder(4, menu_id, menu[menu_id][0], menu[menu_id][1]))
+    menu_id = 2
+    arrivals.append(DineInOrder(5, menu_id, menu[menu_id][0], menu[menu_id][1]))
 
     # Counter for print log
     dinein_count  = 0
