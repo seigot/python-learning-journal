@@ -130,7 +130,7 @@ class LibraryFinderSystem:
             PublicLibrary("Mountain View Library","585 Franklin St, Mountain View, CA","10:00","18:00","13:00","17:00","Mountain View"),
             PublicLibrary("Milpitas Library","160 N Main St, Milpitas, CA","10:00","19:00","10:00","19:00","Milpitas"),
             UniversityLibrary(
-                "Stanford Green Library", "557 Escondido Mall, Stanford, CA", "10:00","21:30","12:00","24:00", "Stanford",
+                "Stanford Green Library", "557 Escondido Mall, Stanford, CA", "10:00","21:30","12:00","21:30", "Stanford",
                 True, True, "ID required at night"
             ),
             UniversityLibrary(
@@ -138,7 +138,7 @@ class LibraryFinderSystem:
                 True, False, "Public access allowed"
             ),
             UniversityLibrary(
-                "Santa Clara University Library", "500 El Camino Real Santa Clara, CA", "09:00","22:00","9:00","23:59", "SCU",
+                "Santa Clara University Library", "500 El Camino Real Santa Clara, CA", "09:00","22:00","9:00","22:00", "SCU",
                 True, True, "Public access allowed",
             )
         ]
@@ -172,27 +172,27 @@ class LibraryFinderSystem:
 
     def binary_search_closest(self, libraries, time, day):
         target = convert_time_to_minutes(time)
+        answer = -1
+
         left = 0
         right = len(libraries) - 1
         while left <= right:
             mid = (left + right) // 2
             mid_time = libraries[mid].closing_minutes(day)
-            if mid_time == target:
-                return mid
-            elif mid_time < target:
+            if mid_time <= target:
+                answer = mid
                 left = mid + 1
             else:
                 right = mid - 1
-        if left >= len(libraries):
-            return len(libraries) - 1
-        if right < 0:
-            return 0
-        return left
+        return answer    
 
     def find_recommendations(self, time, day, k=3):
         libraries = self.sorted_libraries[day]
-        target = convert_time_to_minutes(time)
         index = self.binary_search_closest(libraries, time, day)
+        if index == -1:
+            raise ValueError("No libraries match the requested time.")
+        target = convert_time_to_minutes(time)
+
         result = []
         i = index
         while i >= 0 and len(result) < k:
@@ -200,8 +200,6 @@ class LibraryFinderSystem:
             if library.closing_minutes(day) <= target:
                 result.append(library)
             i -= 1
-        if not result:
-            raise ValueError("No libraries match the requested time.")
         return result
 
     def run_debug_tests(self):
