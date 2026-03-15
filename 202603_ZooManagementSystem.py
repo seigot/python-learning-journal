@@ -1,5 +1,8 @@
 # chatGPT: https://chatgpt.com/share/69b4dbde-fe6c-8009-bc76-4acbc70dbc2b
 
+# #####
+# Class: Animal
+# #####
 class Animal:
     def __init__(self, name, species, care_level):
         self.name = name
@@ -9,14 +12,19 @@ class Animal:
     def __str__(self):
         return f"{self.name} ({self.species}) - Care Level: {self.care_level}"
 
-
+# #####
+# Class: HashNode 
+#   This is for HashTable chaining for collision resolusion.
+# #####
 class HashNode:
     def __init__(self, key, value):
         self.key = key              # animal name
         self.value = value          # Animal object
         self.next = None
 
-
+# #####
+# Class: HashTable
+# #####
 class HashTable:
     def __init__(self, size=8):
         self.size = size
@@ -28,21 +36,27 @@ class HashTable:
         #   the remainder after dividing by the table size.
         return sum(ord(c) for c in key) % self.size
 
+    # [Requirement]: insertion
+    #  average: O(1)
+    #  worst: O(n)
     def insert(self, animal):
-        # Get Hash value and Head Pointer
+        # 1.Get Hash value and Head Pointer
         index = self._hash(animal.name)
         head = self.table[index]
-        # Search Insertion point
+        # 2.Search Insertion point
         current = head
         while current:
             if current.key == animal.name:
                 raise ValueError(f"Animal '{animal.name}' already exists.")
             current = current.next
-        # Insert Process
+        # 3.Main insertion Process
         new_node = HashNode(animal.name, animal)
         new_node.next = head
         self.table[index] = new_node
 
+    # [Requirement]: searching by animal name.
+    #  average: O(1)
+    #  worst: O(n)
     def search(self, name):
         index = self._hash(name)
         current = self.table[index]
@@ -53,11 +67,14 @@ class HashTable:
             current = current.next
         return None
 
+    # [Requirement]: deletion.
+    #  average: O(1)
+    #  worst: O(n)
     def delete(self, name):
         index = self._hash(name)
         current = self.table[index]
         prev = None
-
+        # find animal name from chained object
         while current:
             if current.key == name:
                 if prev is None:
@@ -70,6 +87,7 @@ class HashTable:
 
         raise ValueError(f"Animal '{name}' not found in HashTable.")
 
+    # Helper function to get all animals.
     def get_all_animals(self):
         animals = []
         for head in self.table:
@@ -79,22 +97,24 @@ class HashTable:
                 current = current.next
         return animals
 
+    # Helper function to display all animals.
     def display(self):
-        print("=== Hash Table ===")
         for i, head in enumerate(self.table):
             print(f"Bucket {i}:", end=" ")
             current = head
             if not current:
-                print("Empty")
+                print("-")
                 continue
-
             chain = []
             while current:
                 chain.append(current.key)
                 current = current.next
             print(" -> ".join(chain))
 
-
+# #####
+#  Class: BSTNode, 
+#    The node for Binary search tree, store animals by linked list which have same priority. 
+# #####
 class BSTNode:
     def __init__(self, care_level):
         self.care_level = care_level
@@ -102,11 +122,14 @@ class BSTNode:
         self.left = None
         self.right = None
 
-
+# #####
+#  Class: BST, Binary Search tree to find animals.
+# #####
 class BST:
     def __init__(self):
         self.root = None
 
+    # [Requirement] insertion of animals based on care level.
     def insert(self, animal):
         self.root = self._insert(self.root, animal)
 
@@ -126,6 +149,7 @@ class BST:
 
         return node
 
+    # Remove animals based on the name of the animal.
     def remove(self, animal):
         self.root = self._remove(self.root, animal)
 
@@ -181,6 +205,9 @@ class BST:
             current = current.left
         return current
 
+    # [Requirement] 
+    #   Efficiently retrieve animals that urgently need attention within a care level range.
+    #   Search BST recursively by refering "min_level" and "max_level".
     def range_search(self, min_level, max_level):
         result = []
         self._range_search(self.root, min_level, max_level, result)
@@ -215,28 +242,44 @@ class BST:
 # Class: ZooManagementSystem
 # Method:
 #  - add_animal: 
-#  - search_animal: 
+#      Adds a new animal to the system and inserts it into both the hash table and the BST 
+#      based on its care level.
+#  - search_animal:
+#      Searches for an animal by its unique name using the hash table for fast lookup.
 #  - delete_animal: 
+#      Removes an animal from both the hash table and the BST to keep the system data consistent.
 #  - update_care_level: 
+#      pdates an animal’s care level and reinserts it into the BST at the correct position.
 #  - periodic_increase: 
+#      Simulates the passage of time by increasing care levels of unattended animals and updating the BST.
 #  - get_basic_care_animals: 
+#      Retrieves animals with care levels from 1 to 3 for the Basic Care facility.
 #  - get_advanced_care_animals: 
+#      Retrieves animals with care levels from 4 to 7 for the Advanced Care facility.
 #  - get_intensive_care_animals: 
+#      Retrieves animals with care levels from 8 to 10 for the Intensive Care facility.
 #  - display_all:
+#      Displays all animals currently stored in the zoo management system.
 #########
 class ZooManagementSystem:
     def __init__(self):
         self.hash_table = HashTable()
         self.bst = BST()
 
+    # Adds a new animal to the system and inserts it into both the hash table and the BST 
+    # based on its care level.
     def add_animal(self, name, species, care_level):
+        if not (1 <= care_level <= 10):
+            raise ValueError("Care level must be between 1 and 10.")
         animal = Animal(name, species, care_level)
         self.hash_table.insert(animal)
         self.bst.insert(animal)
 
+    # Searches for an animal by its unique name using the hash table for fast lookup.
     def search_animal(self, name):
         return self.hash_table.search(name)
 
+    # Removes an animal from both the hash table and the BST to keep the system data consistent.
     def delete_animal(self, name):
         animal = self.hash_table.search(name)
         if animal is None:
@@ -245,33 +288,38 @@ class ZooManagementSystem:
         self.bst.remove(animal)
         self.hash_table.delete(name)
 
+    # Updates an animal’s care level and reinserts it into the BST at the correct position.
     def update_care_level(self, animal):
         if animal.care_level >= 10:
             return
-
         self.bst.remove(animal)
         animal.care_level += 1
         self.bst.insert(animal)
 
+    # Simulates the passage of time by increasing care levels of unattended animals and updating the BST.
     def periodic_increase(self):
         animals = self.hash_table.get_all_animals()
         for animal in animals:
             self.update_care_level(animal)
 
+    # get_basic_care_animals: 
     def get_basic_care_animals(self):
         return self.bst.range_search(1, 3)
 
+    # get_advanced_care_animals: 
     def get_advanced_care_animals(self):
         return self.bst.range_search(4, 7)
 
+    # get_intensive_care_animals: 
     def get_intensive_care_animals(self):
         return self.bst.range_search(8, 10)
 
+    # display_all:
     def display_all(self):
         self.hash_table.display()
         self.bst.display_inorder()
 
-
+# Helper Function
 def print_animals(title, animals):
     print(f"\n{title}")
     if not animals:
@@ -280,56 +328,51 @@ def print_animals(title, animals):
     for animal in animals:
         print(animal)
 
-
 def main():
+
+    # 1.Get ZooManagementSystem object instance
     zoo = ZooManagementSystem()
 
-    # Insert 10 sample animals
+    # 2.1.Insert 10 sample animals
+    print("\n=== 2.1. Insertion ===")
     zoo.add_animal("Leo", "Lion", 5)
     zoo.add_animal("Penny", "Penguin", 3)
-    zoo.add_animal("Ella", "Elephant", 7)
+    zoo.add_animal("Ella", "Elephant", 10)
     zoo.add_animal("Milo", "Monkey", 2)
     zoo.add_animal("Zara", "Zebra", 4)
     zoo.add_animal("Tony", "Tiger", 8)
-    zoo.add_animal("Gina", "Giraffe", 6)
+    zoo.add_animal("Gina", "Giraffe", 7)
     zoo.add_animal("Hugo", "Hippo", 5)
     zoo.add_animal("Benny", "Bear", 3)
     zoo.add_animal("Ruby", "Rabbit", 1)
-
-    print("INITIAL DATA")
     zoo.display_all()
 
-    # Search by name
-    print("\n=== Search Test ===")
+    # 2.2 Deletion
+    print("\n=== 2.2 Deletion ===")
+    zoo.delete_animal("Tony")
+    zoo.display_all()
+
+    # 3.1.Search by name
+    print("\n=== 3.1.Search by name ===")
     animal = zoo.search_animal("Leo")
     print(animal)
+    animal = zoo.search_animal("Benny")
+    print(animal)
 
-    # Facility retrieval
+    # 3.2.Efficiently retrieve animals within a care level range.
+    print("\n=== 3.2.Efficiently retrieve animals within a care level range. ===")
     print_animals("Basic Care (1-3):", zoo.get_basic_care_animals())
     print_animals("Advanced Care (4-7):", zoo.get_advanced_care_animals())
     print_animals("Intensive Care (8-10):", zoo.get_intensive_care_animals())
 
-    # Periodic increase
-    print("\n=== Before Periodic Increase ===")
-    zoo.bst.display_inorder()
-
+    # 3.3 Periodic increase
+    print("\n=== 3.3 Periodic increase ===")
     zoo.periodic_increase()
-
     print("\n=== After Periodic Increase ===")
-    zoo.bst.display_inorder()
-
-    # Delete test
-    print("\n=== Delete Test ===")
-    zoo.delete_animal("Penny")
-    deleted = zoo.search_animal("Penny")
-    print("Search after delete:", deleted)
-
-    print_animals("Basic Care after deleting Penny:", zoo.get_basic_care_animals())
-
-    # Collision example
-    print("\n=== Hash Table Collision View ===")
-    zoo.hash_table.display()
-
+    zoo.display_all()
+    print_animals("Basic Care (1-3):", zoo.get_basic_care_animals())
+    print_animals("Advanced Care (4-7):", zoo.get_advanced_care_animals())
+    print_animals("Intensive Care (8-10):", zoo.get_intensive_care_animals())
 
 if __name__ == "__main__":
     main()
