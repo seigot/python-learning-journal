@@ -1,29 +1,28 @@
---- Midterm Project Code and Report, Advanced Python Mar,2026 ---  
-This README explains (1.)how to set up, (2.)run, and (3.)test my project.  
+--- Midterm Project Code and Report (Advanced Python, March 2026) ---
+This README explains how to (1)set up, (2)run, and (3)test my project.  
 
-# 1. How to set up
-1.1 Open the terminal on your environment. If you use VScode, you can open the terminal from the menu var.
-1.2 Check if python is installed properly and works with python version 3.
+# 1. How to set up.
+Open a terminal in your environment. If you are using VS Code, you can open the terminal from the menu bar.
 
-```
-# ex. Check if python is installed properly.
+```bash
+# ex. Make sure Python 3 is installed and working properly.
 $ python --version
 Python 3.12.5
 ```
 
-# 2. How to run
-Run code as below on the terminal on your environment.
+# 2. How to run.
+Run the following command in your terminal:
 
-```
+```bash
 $ python 202603_WeekendLibraryClosingTimeFinder.py 
 ```
 
-# 3. How to test
-Input Sat or Sun, and expected closing time after running the code.  
+# 3. How to test my project.
+After running the program, input the day (Sat or Sun) and the desired time.
 
-TestCase1. [SuccessCase] Search the library closing until 19:00 on Saturday.
+TestCase1. [Success] Search for libraries that close at or after 19:00 on Saturday.
 
-```
+```bash
 $ python 202603_WeekendLibraryClosingTimeFinder.py 
 ====== Weekend Library Closing Time Finder ======
 Day (Sat/Sun): sat
@@ -31,7 +30,7 @@ Time HH:MM: 19:00
 --> Check the result
 ```
 
-TestCase2. [SuccessCase] Search the library closing until 22:00 on Sunday.
+TestCase2. [Success] Search for libraries that close at or after 22:00 on Sunday.
 
 ```
 $ python 202603_WeekendLibraryClosingTimeFinder.py 
@@ -41,7 +40,7 @@ Time HH:MM: 22:00
 --> Check the result
 ```
 
-TestCase3. [ErrorCase] Date Error (input "aaa" instead of Sat/Sun).
+TestCase3. [ErrorCase] Invalid day input (e.g., "aaa" instead of Sat/Sun).
 
 ```
 ====== Weekend Library Closing Time Finder ======
@@ -50,7 +49,7 @@ Time HH:MM: aaa
 Error: Day must be Saturday or Sunday
 ```
 
-TestCase4. [ErrorCase] Time Error (Too early than opening hour).
+TestCase4. [ErrorCase] Invalid time input (earlier than opening hours).
 
 ```
 ====== Weekend Library Closing Time Finder ======
