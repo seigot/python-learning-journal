@@ -228,7 +228,7 @@ class LibraryFinderSystem:
     def run(self):
         self.load_libraries()
         while True:
-            print("====== Library Finder ======")
+            print("====== Weekend Library Closing Time Finder ======")
             day = input("Day (Sat/Sun): ").lower()
             if day == QUIT:
                 break
@@ -331,5 +331,5 @@ def validate_day(day: str) -> None:
 
 if __name__ == "__main__":
     system = LibraryFinderSystem()
-    system.run_debug_tests()
+#    system.run_debug_tests()
     system.run()
