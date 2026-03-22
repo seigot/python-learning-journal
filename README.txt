@@ -27,7 +27,13 @@ $ python 202603_WeekendLibraryClosingTimeFinder.py
 ====== Weekend Library Closing Time Finder ======
 Day (Sat/Sun): sat
 Time HH:MM: 19:00
---> Check the result
+
+--> ex. result
+== Result:1. Milpitas Library ==
+   - Opening: 10:00 - Closing: 19:00
+   - Address: 160 N Main St, Milpitas, CA
+   - Access: Public
+...
 ```
 
 TestCase2. [Success] Search for libraries that close at or after 22:00 on Sunday.
