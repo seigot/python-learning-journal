@@ -35,7 +35,7 @@ Time HH:MM: 19:00
 ...
 ```
 
-TestCase2. [Success] Search for libraries that close at or after 22:00 on Sunday.
+TestCase2. [Success] Search for libraries that close at or before 22:00 on Sunday.
 
 ```
 $ python 202603_WeekendLibraryClosingTimeFinder.py 
