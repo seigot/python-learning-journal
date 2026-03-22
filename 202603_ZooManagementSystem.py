@@ -346,11 +346,15 @@ def main():
     zoo.add_animal("Benny", "Bear", 3)
     zoo.add_animal("Ruby", "Rabbit", 1)
     zoo.display_all()
+    print("[Continue to push Enter...]")
+    input()
 
     # 2.2 Deletion
     print("\n=== 2.2 Deletion ===")
     zoo.delete_animal("Tony")
     zoo.display_all()
+    print("[Continue to push Enter...]")
+    input()
 
     # 3.1.Search by name
     print("\n=== 3.1.Search by name ===")
@@ -358,12 +362,16 @@ def main():
     print(animal)
     animal = zoo.search_animal("Benny")
     print(animal)
+    print("[Continue to push Enter...]")
+    input()
 
     # 3.2.Efficiently retrieve animals within a care level range.
     print("\n=== 3.2.Efficiently retrieve animals within a care level range. ===")
     print_animals("Basic Care (1-3):", zoo.get_basic_care_animals())
     print_animals("Advanced Care (4-7):", zoo.get_advanced_care_animals())
     print_animals("Intensive Care (8-10):", zoo.get_intensive_care_animals())
+    print("[Continue to push Enter...]")
+    input()
 
     # 3.3 Periodic increase
     print("\n=== 3.3 Periodic increase ===")
@@ -373,6 +381,8 @@ def main():
     print_animals("Basic Care (1-3):", zoo.get_basic_care_animals())
     print_animals("Advanced Care (4-7):", zoo.get_advanced_care_animals())
     print_animals("Intensive Care (8-10):", zoo.get_intensive_care_animals())
+    print("[Continue to push Enter...]")
+    input()
 
 if __name__ == "__main__":
     main()
