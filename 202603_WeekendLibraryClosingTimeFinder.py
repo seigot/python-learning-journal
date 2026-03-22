@@ -29,6 +29,7 @@ class Library:
         self.closing_time_sun = closing_time_sun
         self.is_public_access = is_public_access
 
+    # Return the opening time of the library for the specified day.
     def get_opening_time(self, day):
         if day == SATURDAY:
             return self.opening_time_sat
@@ -36,6 +37,7 @@ class Library:
             return self.opening_time_sun
         raise ValueError("Invalid day")
 
+    # Return the closing time of the library for the specified day.
     def get_closing_time(self, day):
         if day == SATURDAY:
             return self.closing_time_sat
@@ -43,9 +45,11 @@ class Library:
             return self.closing_time_sun
         raise ValueError("Invalid day")
 
+    # Convert the closing time of the library into minutes.
     def closing_minutes(self, day):
         return convert_time_to_minutes(self.get_closing_time(day))
 
+    # Return whether the library is accessible to the public.
     def can_access_in_public(self):
         return self.is_public_access
 
@@ -101,6 +105,7 @@ class UniversityLibrary(Library):
         self.requires_id = requires_id
         self.access_note = access_note
 
+    # Return a human-readable description of access conditions.
     def get_access_condition(self):
         if not self.visitor_access_allowed:
             condition = "Visitors not allowed"
@@ -120,6 +125,7 @@ class LibraryFinderSystem:
         self.libraries = []
         self.sorted_libraries = {} # Use HashTable for sorted library list.
 
+    # Load library data into the system and initialize sorted structures.
     def load_libraries(self):
         data = [
             PublicLibrary("Willow Glen Library","1157 Minnesota Ave, San Jose, CA","09:00","18:00","00:00","00:00","San Jose"),
@@ -148,6 +154,7 @@ class LibraryFinderSystem:
         self.sorted_libraries[SATURDAY] = self.merge_sort_libraries(self.libraries, SATURDAY)
         self.sorted_libraries[SUNDAY] = self.merge_sort_libraries(self.libraries, SUNDAY)
 
+    # Sort libraries by closing time using merge sort.
     def merge_sort_libraries(self, libraries, day):
         if len(libraries) <= 1:
             return libraries
@@ -156,6 +163,7 @@ class LibraryFinderSystem:
         right = self.merge_sort_libraries(libraries[mid:], day)
         return self._merge(left, right, day)
 
+    # Merge two sorted lists of libraries into one sorted list.
     def _merge(self, left, right, day):
         merged = []
         i = j = 0
@@ -170,6 +178,7 @@ class LibraryFinderSystem:
         merged.extend(right[j:])
         return merged
 
+    # Find the index of the library with the closest closing time that does not exceed the target time.
     def binary_search_closest(self, libraries, time, day):
         target = convert_time_to_minutes(time)
         answer = -1
@@ -186,6 +195,7 @@ class LibraryFinderSystem:
                 right = mid - 1
         return answer    
 
+    # Return up to k recommended libraries that close before or at the target time.
     def find_recommendations(self, time, day, k=3):
         libraries = self.sorted_libraries[day]
         index = self.binary_search_closest(libraries, time, day)
@@ -202,6 +212,7 @@ class LibraryFinderSystem:
             i -= 1
         return result
 
+    # Run predefined test cases for debugging purposes.
     def run_debug_tests(self):
         self.load_libraries()
         print("\n--- DEBUG TESTS ---")
@@ -224,7 +235,7 @@ class LibraryFinderSystem:
                 q.display_results(day)
             except Exception as e:
                 print("Error:", e)
-
+    # Run the main interactive program loop.
     def run(self):
         self.load_libraries()
         while True:
@@ -260,6 +271,7 @@ class LinkedList:
         self.head = None
         self.tail = None
 
+    # Add a new item to the end of the linked list.
     def append(self, item):
         new_node = Node(item)
         if self.head is None:
@@ -269,6 +281,7 @@ class LinkedList:
         self.tail.next = new_node
         self.tail = new_node
 
+    # Remove and return the first item in the linked list.
     def pop_left(self):
         if self.head is None:
             raise IndexError("Queue empty")
@@ -278,6 +291,7 @@ class LinkedList:
             self.tail = None
         return node.data
 
+    # Check whether the linked list is empty.
     def is_empty(self):
         return self.head is None
 
@@ -285,15 +299,19 @@ class LibraryResultQueue:
     def __init__(self):
         self.items = LinkedList()
 
+    # Add a library to the queue.
     def enqueue(self, library):
         self.items.append(library)
 
+    # Remove and return the next library from the queue.
     def dequeue(self):
         return self.items.pop_left()
 
+    # Check if the queue is empty.
     def is_empty(self):
         return self.items.is_empty()
 
+    # Display library search results in ranked order.
     def display_results(self, day):
         rank = 1
         while not self.is_empty():
@@ -309,10 +327,12 @@ class LibraryResultQueue:
 # -----------------------------
 # Utility functions
 # -----------------------------
+# Convert a time string (HH:MM) into total minutes.
 def convert_time_to_minutes(time_str: str) -> int:
     hour, minute = map(int, time_str.split(":"))
     return hour * 60 + minute
 
+# Validate that the input time is in HH:MM format and within valid ranges.
 def validate_time_format(time_str: str) -> None:
     parts = time_str.split(":")
     if len(parts) != 2:
@@ -324,7 +344,7 @@ def validate_time_format(time_str: str) -> None:
     minute = int(minute)
     if hour < 0 or hour > 23 or minute < 0 or minute > 59:
         raise ValueError("Invalid time")
-
+# Validate that the input day is either Saturday or Sunday.
 def validate_day(day: str) -> None:
     if day.lower() not in {SATURDAY, SUNDAY}:
         raise ValueError("Day must be Saturday or Sunday")
