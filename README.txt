@@ -32,7 +32,6 @@ Time HH:MM: 19:00
 == Result:1. Milpitas Library ==
    - Opening: 10:00 - Closing: 19:00
    - Address: 160 N Main St, Milpitas, CA
-   - Access: Public
 ...
 ```
 
@@ -43,7 +42,11 @@ $ python 202603_WeekendLibraryClosingTimeFinder.py
 ===== Weekend Library Closing Time Finder ======
 Day (Sat/Sun): sun
 Time HH:MM: 22:00
---> Check the result
+
+--> ex. result
+== Result:1. Santa Clara University Library ==
+   - Opening: 9:00 - Closing: 22:00
+   - Address: 500 El Camino Real Santa Clara, CA
 ```
 
 TestCase3. [ErrorCase] Invalid day input (e.g., "aaa" instead of Sat/Sun).
