@@ -20,7 +20,7 @@ $ python 202603_WeekendLibraryClosingTimeFinder.py
 # 3. How to test my project.
 After running the program, input the day (Sat or Sun) and the desired time.
 
-TestCase1. [Success] Search for libraries that close at or after 19:00 on Saturday.
+TestCase1. [Success] Search for libraries that close at or before 19:00 on Saturday.
 
 ```bash
 $ python 202603_WeekendLibraryClosingTimeFinder.py 
@@ -58,7 +58,7 @@ Time HH:MM: aaa
 Error: Day must be Saturday or Sunday
 ```
 
-TestCase4. [ErrorCase] Invalid time input (earlier than opening hours).
+TestCase4. [ErrorCase] Valid time input, but no libraries match the requested time.
 
 ```
 ====== Weekend Library Closing Time Finder ======
