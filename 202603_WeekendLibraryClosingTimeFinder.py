@@ -118,7 +118,7 @@ class UniversityLibrary(Library):
         return condition
 
 # -----------------------------
-# LibraryFinderSystem Class:
+# LibraryFinderSystem Class: This class finds the best matching libraries by sorting and searching the data.
 # -----------------------------
 class LibraryFinderSystem:
     def __init__(self):
@@ -259,7 +259,7 @@ class LibraryFinderSystem:
                 continue
 
 # -----------------------------
-# LibraryResultQueue Class:
+# LibraryResultQueue Class: This class manages and displays the results in order using a queue.
 # -----------------------------
 class Node:
     def __init__(self, data):
