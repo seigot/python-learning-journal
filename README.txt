@@ -66,3 +66,9 @@ Day (Sat/Sun): sat
 Time HH:MM: 03:00
 Error: No libraries match the requested time.
 ```
+
+Quit the program.  
+Enter q to quit the program at the day or time prompt.  
+```
+q
+```
