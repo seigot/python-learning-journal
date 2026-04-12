@@ -1,0 +1,5 @@
+this is a simple spell checker for the lab.
+spell
+tree set word document hello world HELLO hello
+misspelled
+testing AVL Helo helo TREEEEE
