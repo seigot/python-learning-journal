@@ -1,5 +1,6 @@
 # Citation: https://chatgpt.com/share/69f6c1da-3fa0-83e8-898e-cda1e495f07e
 from collections import deque
+from collections import defaultdict
 
 class Graph:
     def __init__(self):
@@ -88,6 +89,43 @@ class Graph:
                     queue.append(new_path)
         return []
 
+    def bfs_to_find_the_shortest_path2(self, start_vertex, end_vertex):
+        # Error Check
+        if start_vertex not in self.graph or end_vertex not in self.graph:
+            return []
+
+        # The function performs BFS by storing entire paths in the queue. 
+        # It explores paths level by level and returns the first path that reaches the destination.
+        # This guarantees the shortest path in terms of the number of edges.
+        visited = set()
+        queue = deque([start_vertex])
+        visited.add(start_vertex)
+
+        # parent of the vertex. this is for reconstructing the shortest path.
+        parent = defaultdict(int)
+        parent[start_vertex] = 0
+
+        # BFS by memorizing parent map.
+        while queue:
+            current = queue.popleft()
+            if current == end_vertex:
+                break
+            for neighbor in self.graph[current]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    parent[neighbor] = current # update parent from current vertex
+                    queue.append(neighbor)
+        if end_vertex not in parent:
+            return []
+
+        # reconstruction
+        shortest_path = []
+        current = end_vertex
+        while current != 0:
+            shortest_path.append(current)
+            current = parent[current]
+        return shortest_path[::-1]
+
 edges = [
     (1, 2),         # 1
     (2, 3), (2, 6), # 2
@@ -117,5 +155,6 @@ print(" -> ".join(map(str, dfs_result)))
 
 # --- BFS to find the shortest path.
 print("Shortest path using BFS:")
-bfs_result = CityGraph.bfs_to_find_the_shortest_path(start, end)
+#bfs_result = CityGraph.bfs_to_find_the_shortest_path(start, end)
+bfs_result = CityGraph.bfs_to_find_the_shortest_path2(start, end)
 print(" -> ".join(map(str, bfs_result)))
