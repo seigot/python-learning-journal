@@ -80,48 +80,43 @@ edges = [
     (27, 29, 5),
 ]
 
+library_edges = [
+    ("Willow Glen Library", 23, 5),
+    ("Berryessa Library", 27, 3),
+    ("Santa Clara City Library", 20, 5),
+    ("Sunnyvale Library", 15, 5),
+    ("Cupertino Library", 14, 5),
+    ("Mountain View Library", 15, 5),
+    ("Milpitas Library", 28, 3),
+    ("Stanford Green Library", 12, 5),
+    ("SJSU Library", 23, 4),
+    ("Santa Clara University Library", 25, 5),
+]
+
 for a, b, cost in edges:
     add_edge(graph, a, b, cost)
-
-
-library_edges = [
-    ("1. Willow Glen Branch Library", 23, 5),
-    ("2. Berryessa Branch Library", 27, 3),
-    ("3. Santa Clara City Library", 20, 5),
-    ("4. Sunnyvale Public Library", 15, 5),
-    ("5. Cupertino Library", 14, 5),
-    ("6. Mountain View Library", 15, 5),
-    ("7. Milpitas Library", 28, 3),
-    ("8. Stanford Cecil H Green Library", 12, 5),
-    ("9. SJSU Library", 23, 4),
-    ("10. Santa Clara University Library", 25, 5),
-]
 
 for library, junction, cost in library_edges:
     add_edge(graph, library, junction, cost)
 
-
 libraries = [
-    "1. Willow Glen Branch Library",
-    "2. Berryessa Branch Library",
-    "3. Santa Clara City Library",
-    "4. Sunnyvale Public Library",
-    "5. Cupertino Library",
-    "6. Mountain View Library",
-    "7. Milpitas Library",
-    "8. Stanford Cecil H Green Library",
-    "9. SJSU Library",
-    "10. Santa Clara University Library",
+    "Willow Glen Library",
+    "Berryessa Library",
+    "Santa Clara City Library",
+    "Sunnyvale Library",
+    "Cupertino Library",
+    "Mountain View Library",
+    "Milpitas Library",
+    "Stanford Green Library",
+    "SJSU Library",
+    "Santa Clara University Library",
 ]
-
 
 distances, previous = dijkstra(graph, "Current Location")
 
-
 for library in libraries:
     path = get_path(previous, library)
-
     print(library)
-    print(f"  Minimum Cost: {distances[library]}")
+    print(f"  Shortest Time(min): {distances[library]}")
     print(f"  Path: {path}")
     print()
