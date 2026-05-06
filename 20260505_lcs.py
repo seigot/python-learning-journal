@@ -31,12 +31,16 @@ def longest_common_subsequence(str1, str2):
 
 
 # Example
-#str1 = "abcde"
-#str2 = "ace"
 str1 = "abcde"
-str2 = "eac"
-
+str2 = "ace"
 length, sequence = longest_common_subsequence(str1, str2)
-
 print("Length:", length)
 print("LCS:", sequence)
+
+print("---")
+str1 = "abcde"
+str2 = "eac"
+length, sequence = longest_common_subsequence(str1, str2)
+print("Length:", length)
+print("LCS:", sequence)
+
