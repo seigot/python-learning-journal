@@ -1,32 +1,34 @@
 import heapq
-from collections import defaultdict
 from itertools import count
-
 class TravelMapGraph:
+    # Store graph connections, shortest distances, using dijkstra algorithm.
+    # and previous nodes for path reconstruction.
     def __init__(self):
-        self.graph = defaultdict(list)
+        self.graph = {}
         self.distances = {}
         self.previous = {}
 
     def add_node(self, node):
+        # Add a new node if it does not exist.
         if node not in self.graph:
             self.graph[node] = []
 
     def add_edge(self, a, b, cost):
+        # Connect two nodes with travel cost.
         self.add_node(a)
         self.add_node(b)
-
         self.graph[a].append((b, cost))
         self.graph[b].append((a, cost))
 
     def add_edge_with_list(self, edges):
+        # Add multiple edges with edge lists.
         for a, b, cost in edges:
             self.add_edge(a, b, cost)
 
     def dijkstra(self, start):
+        # Find shortest travel time from start node to all other nodes using Dijkstra's algorithm.
         self.distances = {node: float("inf") for node in self.graph}
         self.previous = {node: None for node in self.graph}
-
         self.distances[start] = 0
 
         counter = count()
@@ -34,7 +36,6 @@ class TravelMapGraph:
 
         while priority_queue:
             current_cost, _, current_node = heapq.heappop(priority_queue)
-
             if current_cost > self.distances[current_node]:
                 continue
 
@@ -44,12 +45,10 @@ class TravelMapGraph:
                 if new_cost < self.distances[neighbor]:
                     self.distances[neighbor] = new_cost
                     self.previous[neighbor] = current_node
-                    heapq.heappush(
-                        priority_queue,
-                        (new_cost, next(counter), neighbor)
-                    )
+                    heapq.heappush( priority_queue, (new_cost, next(counter), neighbor))
 
     def get_path(self, destination):
+        # Reconstruct the shortest path by tracing previous nodes backward.
         path = []
         current = destination
 
@@ -59,7 +58,8 @@ class TravelMapGraph:
         return path[::-1]
 
     def get_distance(self, destination):
-        return self.distances[destination]
+        # Return the shortest travel time from the start node to destination.
+         return self.distances[destination]
 
 edges = [
     # Left side
