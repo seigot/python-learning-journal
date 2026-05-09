@@ -2,7 +2,7 @@ import heapq
 from collections import defaultdict
 from itertools import count
 
-class RouteGraph:
+class TravelMapGraph:
     def __init__(self):
         self.graph = defaultdict(list)
         self.distances = {}
@@ -56,14 +56,12 @@ class RouteGraph:
         while current is not None:
             path.append(current)
             current = self.previous[current]
-
         return path[::-1]
 
     def get_distance(self, destination):
         return self.distances[destination]
 
 edges = [
-    ("Current Location", 15, 5),
     # Left side
     (12, 11, 6), (12, 13, 6), (12, 15, 25),
     (11, 16, 10),
@@ -102,6 +100,7 @@ library_edges = [
     ("SJSU Library", 23, 4),
     ("Santa Clara University Library", 25, 5),
 ]
+CurrentLocation = [("CurrentLocation", 15, 5)]
 
 libraries = [
     "Willow Glen Library",
@@ -116,10 +115,11 @@ libraries = [
     "Santa Clara University Library",
 ]
 
-route_graph = RouteGraph()
+route_graph = TravelMapGraph()
 route_graph.add_edge_with_list(edges)
 route_graph.add_edge_with_list(library_edges)
-route_graph.dijkstra("Current Location")
+route_graph.add_edge_with_list(CurrentLocation)
+route_graph.dijkstra("CurrentLocation")
 for library in libraries:
     path = route_graph.get_path(library)
     print(library)
