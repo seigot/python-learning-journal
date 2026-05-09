@@ -28,6 +28,8 @@ class Library:
         self.opening_time_sun = opening_time_sun
         self.closing_time_sun = closing_time_sun
         self.is_public_access = is_public_access
+        self.shortest_time = -1 # update dynamically
+        self.shortest_path = -1 # update dynamically
 
     # Return the opening time of the library for the specified day.
     def get_opening_time(self, day):
@@ -124,6 +126,7 @@ class LibraryFinderSystem:
     def __init__(self):
         self.libraries = []
         self.sorted_libraries = {} # Use HashTable for sorted library list.
+        self.Travel_Map_Graph = TravelMapGraph() # TravelMap for search distance to the library.
 
     # Load library data into the system and initialize sorted structures.
     def load_libraries(self):
@@ -208,6 +211,13 @@ class LibraryFinderSystem:
         while i >= 0 and len(result) < k:
             library = libraries[i]
             if library.closing_minutes(day) <= target:
+                # Update library shortesttime/path.
+                library_name = library.name
+                shortest_time = self.Travel_Map_Graph.get_distance(library_name)
+                path = self.Travel_Map_Graph.get_path(library_name)
+                library.shortest_time = shortest_time
+                library.shortest_path = path
+                # Update result list.
                 result.append(library)
             i -= 1
         return result
@@ -238,6 +248,8 @@ class LibraryFinderSystem:
     # Run the main interactive program loop.
     def run(self):
         self.load_libraries()
+        self.Travel_Map_Graph.InitializeMapdata()
+
         while True:
             print("====== Weekend Library Closing Time Finder ======")
             day = input("Day (Sat/Sun): ").lower()
@@ -247,8 +259,10 @@ class LibraryFinderSystem:
             if time.lower() == QUIT:
                 break
             try:
+                # Input data Validation
                 validate_day(day)
                 validate_time_format(time)
+                # Find recommended library
                 results = self.find_recommendations(time, day)
                 q = LibraryResultQueue()
                 for r in results:
@@ -323,9 +337,127 @@ class LibraryResultQueue:
                 print("   - Access:", library.get_access_condition())
             else:
                 print("   - Access: Public")
+            print(f"   - ShortestTime(min): {library.shortest_time}")
+            print(f"   - ShortestPath: {library.shortest_path}")
             rank += 1
 
+## Update for FinalProject 
+import heapq
+from itertools import count
+class TravelMapGraph:
+    # Store graph connections, shortest distances, using dijkstra algorithm.
+    # and previous nodes for path reconstruction.
+    def __init__(self):
+        self.graph = {}
+        self.distances = {}
+        self.previous = {}
 
+    def add_node(self, node):
+        # Add a new node if it does not exist.
+        if node not in self.graph:
+            self.graph[node] = []
+
+    def add_edge(self, a, b, cost):
+        # Connect two nodes with travel cost.
+        self.add_node(a)
+        self.add_node(b)
+        self.graph[a].append((b, cost))
+        self.graph[b].append((a, cost))
+
+    def add_edge_with_list(self, edges):
+        # Add multiple edges with edge lists.
+        for a, b, cost in edges:
+            self.add_edge(a, b, cost)
+
+    def dijkstra(self, start):
+        # Find shortest travel time from start node to all other nodes using Dijkstra's algorithm.
+        self.distances = {node: float("inf") for node in self.graph}
+        self.previous = {node: None for node in self.graph}
+        self.distances[start] = 0
+
+        counter = count()
+        priority_queue = [(0, next(counter), start)]
+
+        while priority_queue:
+            current_cost, _, current_node = heapq.heappop(priority_queue)
+            if current_cost > self.distances[current_node]:
+                continue
+
+            for neighbor, edge_cost in self.graph[current_node]:
+                new_cost = current_cost + edge_cost
+
+                if new_cost < self.distances[neighbor]:
+                    self.distances[neighbor] = new_cost
+                    self.previous[neighbor] = current_node
+                    heapq.heappush( priority_queue, (new_cost, next(counter), neighbor))
+
+    def get_path(self, destination):
+        # Reconstruct the shortest path by tracing previous nodes backward.
+        path = []
+        current = destination
+
+        while current is not None:
+            path.append(current)
+            current = self.previous[current]
+        return path[::-1]
+
+    def get_distance(self, destination):
+        # Return the shortest travel time from the start node to destination.
+         return self.distances[destination]
+    
+    def InitializeMapdata(self):
+        # InitializeMapData function initializes the map for searching the library.
+        edges = [
+           # Left side
+            (12, 11, 6), (12, 13, 6), (12, 15, 25),
+            (11, 16, 10),
+            (13, 14, 18),    
+            # Middle
+            (16, 15, 5), (16, 17, 3),
+            (15, 17, 5), (15, 14, 10), (15, 20, 10),
+            (14, 21, 10),  
+    
+            (17, 18, 5), (17, 19, 5),
+            (18, 19, 5), (18, 28, 10),
+            (19, 20, 5), (19, 26, 5),
+            (20, 21, 5), (20, 25, 5),
+
+            # Right side
+            (21, 22, 10),
+            (22, 23, 5),
+            (23, 24, 5),
+            (24, 29, 5),
+            (25, 24, 5),
+            (25, 26, 5),
+            (26, 27, 5),
+            (27, 28, 5),
+            (27, 29, 5),
+        ]
+
+        library_edges = [
+            ("Willow Glen Library", 23, 5),
+            ("Berryessa Library", 27, 3),
+            ("Santa Clara City Library", 20, 5),
+            ("Sunnyvale Library", 15, 5),
+            ("Cupertino Library", 14, 5),
+            ("Mountain View Library", 15, 5),
+            ("Milpitas Library", 28, 3),
+            ("Stanford Green Library", 12, 5),
+            ("SJSU Library", 23, 4),
+            ("Santa Clara University Library", 25, 5),
+        ]
+
+        self.add_edge_with_list(edges)
+        self.add_edge_with_list(library_edges)
+        self.SetCurrentLocationtoMapdata()
+
+    def SetCurrentLocationtoMapdata(self, CurrentIndex="CurrentLocation", CurrentAdjEdgeIndex=15, CurrentAdjEdgeCost=5):
+        # Set the edge to Current Location
+        # This function should be updated with actual current location.
+        # Currently Set Current location with fixed number.
+        CurrentLocation = [(CurrentIndex, CurrentAdjEdgeIndex, CurrentAdjEdgeCost)]
+        self.add_edge_with_list(CurrentLocation)
+        self.dijkstra(CurrentIndex)
 
 # -----------------------------
 # Utility functions
