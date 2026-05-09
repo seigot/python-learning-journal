@@ -126,6 +126,15 @@ class Graph:
             current = parent[current]
         return shortest_path[::-1]
 
+# [Graph]
+#      Start
+#        1 ───→ 2 ───→ 3 ───→ 4 ───→ 5
+#              ↓       ↓      ↓    ↙ ↓
+#              6 ←─── 7 ←───  8 ←──  ↓     
+#              ↓       ↓      ↓      ↙
+#        9 ←── 10 ←── 11 ←── 12 ←───
+#       Goal
+
 edges = [
     (1, 2),         # 1
     (2, 3), (2, 6), # 2
