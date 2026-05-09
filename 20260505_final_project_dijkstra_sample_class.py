@@ -60,66 +60,79 @@ class TravelMapGraph:
     def get_distance(self, destination):
         # Return the shortest travel time from the start node to destination.
          return self.distances[destination]
-
-edges = [
-    # Left side
-    (12, 11, 6), (12, 13, 6), (12, 15, 25),
-    (11, 16, 10),
-    (13, 14, 18),    
-    # Middle
-    (16, 15, 5), (16, 17, 3),
-    (15, 17, 5), (15, 14, 10), (15, 20, 10),
-    (14, 21, 10),  
     
-    (17, 18, 5), (17, 19, 5),
-    (18, 19, 5), (18, 28, 10),
-    (19, 20, 5), (19, 26, 5),
-    (20, 21, 5), (20, 25, 5),
+    def InitializeMapdata(self):
+        # InitializeMapData function initializes the map for searching the library.
+        edges = [
+           # Left side
+            (12, 11, 6), (12, 13, 6), (12, 15, 25),
+            (11, 16, 10),
+            (13, 14, 18),    
+            # Middle
+            (16, 15, 5), (16, 17, 3),
+            (15, 17, 5), (15, 14, 10), (15, 20, 10),
+            (14, 21, 10),  
+    
+            (17, 18, 5), (17, 19, 5),
+            (18, 19, 5), (18, 28, 10),
+            (19, 20, 5), (19, 26, 5),
+            (20, 21, 5), (20, 25, 5),
 
-    # Right side
-    (21, 22, 10),
-    (22, 23, 5),
-    (23, 24, 5),
-    (24, 29, 5),
-    (25, 24, 5),
-    (25, 26, 5),
-    (26, 27, 5),
-    (27, 28, 5),
-    (27, 29, 5),
-]
+            # Right side
+            (21, 22, 10),
+            (22, 23, 5),
+            (23, 24, 5),
+            (24, 29, 5),
+            (25, 24, 5),
+            (25, 26, 5),
+            (26, 27, 5),
+            (27, 28, 5),
+            (27, 29, 5),
+        ]
 
-library_edges = [
-    ("Willow Glen Library", 23, 5),
-    ("Berryessa Library", 27, 3),
-    ("Santa Clara City Library", 20, 5),
-    ("Sunnyvale Library", 15, 5),
-    ("Cupertino Library", 14, 5),
-    ("Mountain View Library", 15, 5),
-    ("Milpitas Library", 28, 3),
-    ("Stanford Green Library", 12, 5),
-    ("SJSU Library", 23, 4),
-    ("Santa Clara University Library", 25, 5),
-]
-CurrentLocation = [("CurrentLocation", 15, 5)]
+        library_edges = [
+            ("Willow Glen Library", 23, 5),
+            ("Berryessa Library", 27, 3),
+            ("Santa Clara City Library", 20, 5),
+            ("Sunnyvale Library", 15, 5),
+            ("Cupertino Library", 14, 5),
+            ("Mountain View Library", 15, 5),
+            ("Milpitas Library", 28, 3),
+            ("Stanford Green Library", 12, 5),
+            ("SJSU Library", 23, 4),
+            ("Santa Clara University Library", 25, 5),
+        ]
 
-libraries = [
-    "Willow Glen Library",
-    "Berryessa Library",
-    "Santa Clara City Library",
-    "Sunnyvale Library",
-    "Cupertino Library",
-    "Mountain View Library",
-    "Milpitas Library",
-    "Stanford Green Library",
-    "SJSU Library",
-    "Santa Clara University Library",
-]
+        self.add_edge_with_list(edges)
+        self.add_edge_with_list(library_edges)
+        self.SetCurrentLocationtoMapdata()
+
+    def SetCurrentLocationtoMapdata(self, CurrentIndex="CurrentLocation", CurrentAdjEdgeIndex=15, CurrentAdjEdgeCost=5):
+        # Set the edge to Current Location
+        # This function should be updated with actual current location.
+        # Currently Set Current location with fixed number.
+        CurrentLocation = [(CurrentIndex, CurrentAdjEdgeIndex, CurrentAdjEdgeCost)]
+        self.add_edge_with_list(CurrentLocation)
+        self.dijkstra(CurrentIndex)
 
 route_graph = TravelMapGraph()
-route_graph.add_edge_with_list(edges)
-route_graph.add_edge_with_list(library_edges)
-route_graph.add_edge_with_list(CurrentLocation)
-route_graph.dijkstra("CurrentLocation")
+route_graph.InitializeMapdata()
+#route_graph.add_edge_with_list(edges)
+#route_graph.add_edge_with_list(library_edges)
+#route_graph.add_edge_with_list(CurrentLocation)
+#route_graph.dijkstra("CurrentLocation")
+libraries = [
+            "Willow Glen Library",
+            "Berryessa Library",
+            "Santa Clara City Library",
+            "Sunnyvale Library",
+            "Cupertino Library",
+            "Mountain View Library",
+            "Milpitas Library",
+            "Stanford Green Library",
+            "SJSU Library",
+            "Santa Clara University Library",
+]
 for library in libraries:
     path = route_graph.get_path(library)
     print(library)
