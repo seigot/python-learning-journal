@@ -403,7 +403,7 @@ class TravelMapGraph:
 
     def get_distance(self, destination):
         # Return the shortest travel time from the start node to destination.
-         return self.distances[destination]
+        return self.distances[destination]
     
     def InitializeMapdata(self):
         # InitializeMapData function initializes the map for searching the library.
