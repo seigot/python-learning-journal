@@ -1,4 +1,4 @@
---- Midterm Project Code and Report (Advanced Python, March 2026) ---
+--- Final Project Code and Report (Advanced Python, March 2026) ---
 This README explains how to (1)set up, (2)run, and (3)test my project.  
 
 # 1. How to set up.
@@ -14,7 +14,7 @@ Python 3.12.5
 Run the following command in your terminal:
 
 ```bash
-$ python 202603_WeekendLibraryClosingTimeFinder.py 
+$ python 202605_WeekendLibraryClosingTimeFinder_v2.py
 ```
 
 # 3. How to test my project.
@@ -29,9 +29,15 @@ Day (Sat/Sun): sat
 Time HH:MM: 19:00
 
 --> ex. result
+====== Weekend Library Closing Time Finder ======
+Day (Sat/Sun): sat
+Time HH:MM: 19:00
 == Result:1. Milpitas Library ==
    - Opening: 10:00 - Closing: 19:00
    - Address: 160 N Main St, Milpitas, CA
+   - Access: Public
+   - ShortestTime(min): 28
+   - ShortestPath: ['CurrentLocation', 15, 17, 18, 28, 'Milpitas Library']
 ...
 ```
 
@@ -47,6 +53,9 @@ Time HH:MM: 22:00
 == Result:1. Santa Clara University Library ==
    - Opening: 9:00 - Closing: 22:00
    - Address: 500 El Camino Real Santa Clara, CA
+   - Access: Visitors allowed but ID required (Public access allowed)
+   - ShortestTime(min): 25
+   - ShortestPath: ['CurrentLocation', 15, 20, 25, 'Santa Clara University Library']
 ```
 
 TestCase3. [ErrorCase] Invalid day input (e.g., "aaa" instead of Sat/Sun).
@@ -63,7 +72,7 @@ TestCase4. [ErrorCase] Valid time input, but no libraries match the requested ti
 ```
 ====== Weekend Library Closing Time Finder ======
 Day (Sat/Sun): sat
-Time HH:MM: 03:00
+Time HH:MM: 3:00
 Error: No libraries match the requested time.
 ```
 
