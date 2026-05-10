@@ -4,7 +4,6 @@ Target
 - Conclusion:	1.5–2 min  
 
 Detail  
-- BackGround/Data Structure
 
 Slide 1: Title  
 Hello everyone.  
