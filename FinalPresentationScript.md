@@ -17,7 +17,7 @@ I believe This solution allows students to stay focused on studying while still 
 
 ### Graph Structure
 About the Graph Structure.  
-Modeling real-world transportation networks as a graph Accurately is essential for calculating travel time.  
+Modeling real-world road networks as a graph Accurately is essential for calculating travel time and shortest path to the library.  
 For this project, I manually created a graph of roads and libraries in the San Jose area.  
 Each nodes represent libraries or major road intersections.  
 Each edges represent road connections.  
