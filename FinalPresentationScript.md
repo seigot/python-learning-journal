@@ -30,7 +30,7 @@ The system consists of four main components.
 The base Library class manages base library data PublicLibrary and UniversityLibrary classes.  
 The Library finder system classes is used to search for the optimal closing time based on user input.  
 The Library Result Queue Class display three recommended libraries, estimated time, and shortest path to the user.  
-In this project, TravelMapGraph has the graph and search algorithm function to get the estimated time, and shortest path.  
+The most important update is the TravelMapGraph. TravelMapGraph has the graph and search algorithm function to get the estimated time, and shortest path.  
 
 ### Solution(Process)  
 Let me explain about diagram which shows the overall process of the system.  
