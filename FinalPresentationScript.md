@@ -30,7 +30,7 @@ The system consists of four main components.
 The base Library class manages base library data PublicLibrary and UniversityLibrary classes.  
 The Library finder system classes is used to search for the optimal closing time, estimated time, and shortest path based on user input.  
 The Library Result Queue Class display three recommended libraries, estimated time, and shortest path to the user.  
-The most important update is the TravelMapGraph. TravelMapGraph has the road network graph and search algorithm function to get the estimated time, and shortest path.  
+The most important update is the TravelMapGraph. TravelMapGraph has the road network graph and algorithm function to get the estimated time, and shortest path.  
 
 ### Process Diagram  
 Let me explain about diagram which shows the overall process of the system.  
@@ -91,12 +91,12 @@ The first challenge was building accurate map data.
 I converted real-world map into graph nodes manually, however mathmatical convertion is more accurate and efficient.  
 The second challenge was smoothly adding Dijkstra’s algorithm to the existing system.  
 In the system version 1.0, The code size was already large. So to minimize the error of system integration,  
-I tested the graph algorithm separately before integrating it into the entire system.  
+I tested the graph algorithm independently before integrating it into the entire system.  
 
 ### Conclusion
 In conclusion, I designed and developed the Weekend Library Closing Time Finder system.  
 This system not only recommends suitable library options but also provides the estimated travel time and the shortest path to each library.  
 To improve system performance, I applied appropriate data structures and algorithms such as graph structures and Dijkstra’s algorithm.  
- and ethical considerations such as accessibility support and multilingual features.  
+For future improvements, the system could incorporate real-time traffic updates, multiple transportation options such as public transit or walking, and ethical considerations such as accessibility support and the other.  
   
 Thank you for listening.  
