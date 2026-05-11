@@ -1,132 +1,103 @@
-Target
-- BackGround/Data Structure: 4 min  
-- Code Demo: 4 min
-- Conclusion:	1.5–2 min  
+### Introduction
+Hi everyone.
+Today, I'm going to talk about my project, the Weekend Library Closing Time Finder Version 2.0.  
 
-Detail  
+First of all, I will briefly talk about my project background.  
+This project aims to helps students find libraries that match their weekend schedule efficiently.  
+In real life, library hours are different on Saturday and Sunday and also, some university libraries have access restrictions, such as ID requirements.  
+Additionally, Showing estimated travel time helps users choose the most practical library.  
 
-Slide 1: Title  
-Hello everyone.  
-Today, I will present my final project, Weekend Library Closing Time Finder Version 2.0.  
+### Problem Statement
+About the Problem Statement.  
+Some libraries remain open as late as 7:00 PM, allowing students to plan their study sessions flexibly.  
+However, studying with too much concentration can cause students to lose track of time and miss their next scheduled activities.  
+In addition, The system version 1.0 didn't show the distance or travel time to each library.  
+The key solution of this system is to find libraries whose closing time is closest to but not later than the user’s preferred time, and also displaying the estimated travel time to each library.  
+I believe This solution allows students to stay focused on studying while still managing their schedule effectively.  
 
-Slide 2: Introduction  
-This project helps students find libraries that match their weekend schedule.  
-The system includes both public libraries and university libraries.  
-In real life, library hours are different on Saturday and Sunday.  
-Also, some university libraries have access restrictions, such as ID requirements.  
-In version 2.0, I added estimated travel time, so users can choose a more practical library based on both schedule and location.  
+### Graph Structure
+About the Graph Structure.  
+Modeling real-world transportation networks as a graph Accurately is essential for calculating travel time.  
+For this project, I manually created a graph of roads and libraries in the San Jose area.  
+Each nodes represent libraries or major road intersections.  
+Each edges represent road connections.  
+Edge costs represent estimated driving time.  
+To find the shortest travel time and route, I used Dijkstra’s algorithm, which is one of the most efficient algorithms for solving shortest path problems.  
 
-Slide 3: Problem Statement
-The main problem is that students may want to study at a library, but they also need to manage their next schedule.  
-For example, if a student wants to leave before 7 PM, the system should find a library that closes closest to that time, but not later than that time.  
-However, closing time alone is not enough.  
-A library may close at a good time, but it may be too far away.  
-So my system solves this by considering both closing time and travel time.  
+### Solution(Class)  
+Now, I will explain how the system architecture for this system.  
+The system consists of four main components.  
+The base Library class manages base library data PublicLibrary and UniversityLibrary classes.  
+The Library finder system classes is used to search for the optimal closing time based on user input.  
+The Library Result Queue Class display three recommended libraries, estimated time, and shortest path to the user.  
+In this project, TravelMapGraph has the graph and search algorithm function to get the estimated time, and shortest path.  
 
-Slide 4: Graph Structure
-To estimate travel time, I created a graph structure.  
-In this graph:  
-nodes represent libraries or road intersections  
-edges represent road connections  edge costs represent estimated driving time  
-Then I use Dijkstra’s algorithm to find the shortest travel time and path from the current location to each library.  
+### Solution(Process)  
+Let me explain about diagram which shows the overall process of the system.  
+There are three main steps in the overall process.  
+First, all library data is loaded into memory before user input, and graph is initialized.  
+Second, the system waits for the user to enter a preferred day and closing time.  
+Third, based on the user's input, the system search preferred libraries and displays up to three preferred libraries, estimated time and shortest path.   
+From a graph algorithm perspective, Dijkstra’s algorithm is used to get the estimated time and shortest path to each library.  
+
+### Code Demo
+Next, I will briefly explain how the code works.  
+
+The first class is the Library class.  
+The Library class has get_opening_time and get_closing_time methods to get the library's opening and closing hours.  
+The Library class is a base class for the PublicLibrary and UniversityLibrary.  
+
+The LibraryFinderSystem class finds the best matching libraries by sorting and searching the data.  
+The load_libraries method loads and prepares the data.  
+The binary_search_closest method finds the best match library from user request efficiently with time complexity O(log n).  
+The run method controls the main flow of the program, including user input, validation, searching, and displaying results.  
+
+The LibraryResultQueue class manages and displays the search results using a queue and display results in order.  
+The utility functions support the system by converting time strings into minutes and validating day and time inputs.  
+
+And The most important update is the TravelMapGraph.  
+The TravelMapGraph class manages the graph and algorithms and calculates estimated time and shortest path to the library.  
+Basic Workflow is 3steps.  
+First, Build the graph by connecting roads, intersections, and libraries.  
+Second, alculate the shortest travel time from the current location to each library.  
+Third, Return the estimated travel time and shortest path for the selected library.   
+
+The add_node method adds a new location node, such as a road intersection or library.  
+The add_edge connects two locations and stores the travel cost between them.  
+The add_edge_with_list adds multiple road connections efficiently using predefined edge data.  
+The InitializeMapdata builds the San Jose road network and connects all libraries to the graph.  
+The SetCurrentLocationtoMapdata sets the user’s current location and starts route calculation.  
+The dijkstra method finds the shortest travel time from the current location to all libraries.  
+The get_distance method returns the estimated travel time to a selected library.  
+The get_path method returns the estimated travel time to a selected library.  
+
+### Demo(2)
+
+Now, let me run the program.  
+
+First, I enter "sat" for Saturday and "19:00" as the desired time.  
+The system searches for libraries using binary search.  
+Here is the result.  
+You can see that Milpitas Library is recommended, with a closing time of 19:00 and Estimated Time is 28 minutes.  
   
-I used Dijkstra instead of BFS because the graph has different edge weights.  
-For example, some roads take 5 minutes, while others take 10 or 25 minutes.  
+Next, I will try another example.  
+I enter "sun" and "22:00".  
+Again, the system finds the closest valid closing time, Estimated Time, shortest path.  
+The result shows Santa Clara University Library and Estimated Time is 25 minutes.  
 
-Slide 5: UML Class Diagram  
-This is the class structure of my system.  
-The base class is Library.  
-PublicLibrary and UniversityLibrary inherit from the Library class.  
-  
-The LibraryFinderSystem manages the main search process.  
-The new class in version 2.0 is TravelMapGraph, which stores the graph and calculates shortest paths using Dijkstra’s algorithm.  
-I also use LibraryResultQueue to display recommended libraries in order.  
-
-Slide 6: Activity Diagram  
-This diagram shows the overall process.  
-First, the system loads library data and initializes map data.  
-Then it sorts library closing times using merge sort.  
-After the user enters a preferred time, the system uses binary search to find the closest closing time.  
-  
-After that, the system calculates the shortest travel time and path using the graph.  
-Finally, it displays recommended libraries to the user.  
-
-2. Code Demo：約4分  
-Start Demo  
-Now I will show the code and run the program.  
-Step 1: Main function  
-First, the program starts here:  
-
-```
-if __name__ == "__main__":
-    system = LibraryFinderSystem()
-    system.run()
-```
-
-This creates the main system object and starts the interactive program.  
-
-Step 2: Load libraries  
-Next, the system loads library data in load_libraries().  
-This includes public libraries and university libraries.  
-Each library has opening time, closing time, address, and access information.  
-For university libraries, the system can also show whether visitors are allowed and whether ID is required.  
-
-Step 3: Sort and search
-The system sorts libraries by closing time using merge sort.  
-Then, when the user enters a preferred time, the system uses binary search to quickly find the library whose closing time is closest to the user’s preferred time, but not later than it.  
-This makes the search more efficient than checking every library manually.  
-
-Step 4: Graph and Dijkstra
-The most important update in version 2.0 is the graph search.  
-The TravelMapGraph class stores road connections.  
-The dijkstra() function calculates the shortest travel time from the current location to each library.  
-The system also reconstructs the shortest path, so the output can show not only the time, but also the route.  
-
-Step 5: Run normal case  
-Now I will run the program.  
-
-```
-Example input:  
-sat
-19:00
-```
-
-This means the user wants to find libraries on Saturday that close at or before 7 PM.  
-The system displays recommended libraries, their closing times, addresses, access information, shortest travel time, and shortest path.  
-This shows that the system considers both schedule and travel distance.  
-
-Step 6: Run university library case
-Another example is:  
-
-```
-sun
-22:00
-```
-
-This can show a university library result, such as Santa Clara University Library.  
-The system also displays access information, such as whether ID is required.  
-This is useful because university libraries may have different access rules from public libraries.  
-
-Step 7: Error handling  
-Finally, I will show error handling.  
-For example, if the user enters an invalid day or invalid time format, the system shows an error message.  
-Also, if no library matches the requested time, the system tells the user that no libraries match.  
-This makes the program more reliable and user-friendly.  
-
-3. Conclusion：1.5〜2分  
-Slide 8: Technical Challenge  
-There were two main technical challenges.  
+### Challenge
+About the challenges. there were two challenges in this project.  
 The first challenge was building accurate map data.  
-I manually converted real-world locations into graph nodes and estimated driving times as edge costs.  
-The second challenge was safely adding Dijkstra’s algorithm to the existing system.  
-To reduce integration risk, I tested the graph algorithm separately before integrating it into the full system.  
+I converted real-world map into graph nodes manually, however mathmatical convertion is more accurate and efficient.  
+The second challenge was smoothly adding Dijkstra’s algorithm to the existing system.  
+In the system version 1.0, The code size was already large. So to minimize the error of system integration,  
+I tested the graph algorithm separately before integrating it into the entire system.  
 
-Slide 9: Conclusion
-In conclusion, I developed the Weekend Library Closing Time Finder System to help students find libraries that match their weekend schedule.  
-The system uses several data structures and algorithms, including inheritance, merge sort, binary search, graph, Dijkstra’s algorithm, queue, and hash table.  
-The main improvement in version 2.0 is that the system can estimate travel time and shortest paths, not only closing time.  
-For future improvements, I would like to support real-time library updates, public transportation, walking routes, and accessibility features.  
-These improvements would make the system more inclusive and practical for more users.  
-
-Slide 10: Thank you
+### Conclusion
+In conclusion, I designed and developed the Weekend Library Closing Time Finder system.  
+This system not only recommends suitable library options but also provides the estimated travel time and the shortest path to each library.  
+To improve system performance, I applied appropriate data structures and algorithms such as graph structures and Dijkstra’s algorithm.  
+These well-designed data structures also enabled smoother feature expansion during development.  
+For future improvements, the system could incorporate real-time traffic updates, multiple transportation options such as public transit or walking, and ethical considerations such as accessibility support and multilingual features.  
+  
 Thank you for listening.  
