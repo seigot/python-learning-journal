@@ -24,7 +24,7 @@ Each edges represent road connections.
 Edge costs represent estimated driving time.  
 To find the shortest travel time and route, I used Dijkstra’s algorithm, which is one of the most efficient algorithms for solving shortest path problems.  
 
-### Solution(Class)  
+### Class Diagram  
 Now, I will explain how the system architecture works for this system.  
 The system consists of four main components.  
 The base Library class manages base library data PublicLibrary and UniversityLibrary classes.  
@@ -32,7 +32,7 @@ The Library finder system classes is used to search for the optimal closing time
 The Library Result Queue Class display three recommended libraries, estimated time, and shortest path to the user.  
 The most important update is the TravelMapGraph. TravelMapGraph has the road network graph and search algorithm function to get the estimated time, and shortest path.  
 
-### Solution(Process)  
+### Process Diagram  
 Let me explain about diagram which shows the overall process of the system.  
 There are three main steps in the overall process.  
 First, all library data is loaded into memory before user input, and the road network graph is initialized.  
@@ -49,7 +49,7 @@ The Library class is a base class for the PublicLibrary and UniversityLibrary.
 
 The LibraryFinderSystem class finds the best matching libraries by sorting and searching the data.  
 The load_libraries method loads and prepares the data.  
-The binary_search_closest method finds the best match library from user request efficiently with time complexity O(log n).  
+The binary_search_closest method finds the best match library from user request efficiently.  
 The run method controls the main flow of the program, including user input, validation, searching, and displaying results.  
 
 The LibraryResultQueue class manages and displays the search results using a queue and display results in order.  
@@ -59,7 +59,7 @@ And The most important update is the TravelMapGraph.
 The TravelMapGraph class manages the graph and algorithms and calculates estimated time and shortest path to the library.  
 Basic Workflow is 3steps.  
 First, Build the graph by connecting roads, intersections, and libraries.  
-Second, alculate the shortest travel time from the current location to each library.  
+Second, calculate the shortest travel time from the current location to each library.  
 Third, Return the estimated travel time and shortest path for the selected library.   
 
 The add_node method adds a new location node, such as a road intersection or library.  
@@ -97,7 +97,6 @@ I tested the graph algorithm separately before integrating it into the entire sy
 In conclusion, I designed and developed the Weekend Library Closing Time Finder system.  
 This system not only recommends suitable library options but also provides the estimated travel time and the shortest path to each library.  
 To improve system performance, I applied appropriate data structures and algorithms such as graph structures and Dijkstra’s algorithm.  
-These well-designed data structures also enabled smoother feature expansion during development.  
-For future improvements, the system could incorporate real-time traffic updates, multiple transportation options such as public transit or walking, and ethical considerations such as accessibility support and multilingual features.  
+ and ethical considerations such as accessibility support and multilingual features.  
   
 Thank you for listening.  
