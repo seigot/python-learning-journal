@@ -25,7 +25,7 @@ Edge costs represent estimated driving time.
 To find the shortest travel time and route, I used Dijkstra’s algorithm, which is one of the most efficient algorithms for solving shortest path problems.  
 
 ### Solution(Class)  
-Now, I will explain how the system architecture for this system.  
+Now, I will explain how the system architecture works for this system.  
 The system consists of four main components.  
 The base Library class manages base library data PublicLibrary and UniversityLibrary classes.  
 The Library finder system classes is used to search for the optimal closing time based on user input.  
