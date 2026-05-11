@@ -1,6 +1,6 @@
 ### Introduction
 Hi everyone.
-Today, I'm going to talk about my project, the Weekend Library Closing Time Finder Version 2.0.  
+Today, I'm going to talk about my final project, the Weekend Library Closing Time Finder Version 2.0.  
 
 First of all, I will briefly talk about my project background.  
 This project aims to helps students find libraries that match their weekend schedule efficiently.  
