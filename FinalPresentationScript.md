@@ -28,14 +28,14 @@ To find the shortest travel time and route, I used Dijkstra’s algorithm, which
 Now, I will explain how the system architecture works for this system.  
 The system consists of four main components.  
 The base Library class manages base library data PublicLibrary and UniversityLibrary classes.  
-The Library finder system classes is used to search for the optimal closing time based on user input.  
+The Library finder system classes is used to search for the optimal closing time, estimated time, and shortest path based on user input.  
 The Library Result Queue Class display three recommended libraries, estimated time, and shortest path to the user.  
-The most important update is the TravelMapGraph. TravelMapGraph has the graph and search algorithm function to get the estimated time, and shortest path.  
+The most important update is the TravelMapGraph. TravelMapGraph has the road network graph and search algorithm function to get the estimated time, and shortest path.  
 
 ### Solution(Process)  
 Let me explain about diagram which shows the overall process of the system.  
 There are three main steps in the overall process.  
-First, all library data is loaded into memory before user input, and graph is initialized.  
+First, all library data is loaded into memory before user input, and the road network graph is initialized.  
 Second, the system waits for the user to enter a preferred day and closing time.  
 Third, based on the user's input, the system search preferred libraries and displays up to three preferred libraries, estimated time and shortest path.   
 From a graph algorithm perspective, Dijkstra’s algorithm is used to get the estimated time and shortest path to each library.  
