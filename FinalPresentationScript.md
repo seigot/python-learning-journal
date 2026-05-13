@@ -5,7 +5,7 @@ Today, I'm going to talk about my final project, the Weekend Library Closing Tim
 First of all, I will briefly talk about my project background.  
 This project aims to help students find libraries that match their weekend schedule efficiently.  
 In real life, library hours are different on Saturday and Sunday and also, some university libraries have access restrictions, such as ID requirements.  
-Additionally, showing estimated travel time helps users choose the most practical library.  
+Additionally, showing estimated travel time helps users to slect the most practical library.  
 
 ### Problem Statement
 Let me explain the problem statement.  
