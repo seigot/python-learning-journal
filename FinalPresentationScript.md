@@ -82,7 +82,6 @@ You can see that Milpitas Library is recommended, with a closing time of 19:00 a
   
 Next, I will try another example.  
 I enter "sun" and "22:00".  
-Again, the system finds the closest valid closing time, Estimated Time, shortest path.  
 The result shows Santa Clara University Library and Estimated Time is 25 minutes.  
 
 ### Challenge
