@@ -37,7 +37,7 @@ There are three main steps in the overall process.
 First, all library data is loaded into memory before user input, and the road network graph is initialized.  
 Second, the system waits for the user to enter a preferred day and closing time.  
 Third, based on the user's input, the system search preferred libraries and displays up to three preferred libraries, estimated time and shortest path.   
-From a graph algorithm perspective, Dijkstra’s algorithm is used to get the estimated time and shortest path to each library.  
+In terms of the graph, Dijkstra’s algorithm is used to get the estimated time and shortest path to each library.  
 
 ### Code Demo
 Next, I will briefly explain how the code works.  
