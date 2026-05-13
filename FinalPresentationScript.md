@@ -29,7 +29,7 @@ The system consists of four main components.
 The base Library class manages PublicLibrary and UniversityLibrary classes.  
 The Library finder system classes is used to search for the optimal closing time, estimated time, and shortest path based on user input.  
 The Library Result Queue Class displays three recommended libraries, estimated time, and shortest path to the user.  
-The most important update is the TravelMapGraph. TravelMapGraph manages the road network graph and algorithm function to get the estimated time, and shortest path.  
+The most important update is the TravelMapGraph class. TravelMapGraph manages the road network graph and algorithm function to get the estimated time, and shortest path.  
 
 ### Process Diagram  
 Let me explain the process diagram  which shows the overall process of the system.  
