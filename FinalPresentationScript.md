@@ -54,7 +54,6 @@ The binary_search_closest method finds the best match library from user request 
 The run method controls the main flow of the program, including user input, validation, searching, and displaying results.  
 
 The LibraryResultQueue class manages and displays the search results using a queue and display results in order.  
-The utility functions support the system by converting time strings into minutes and validating day and time inputs.  
 
 And The most important update is the TravelMapGraph.  
 The TravelMapGraph class manages the graph and algorithms and calculates estimated time and shortest path to the library.  
