@@ -13,7 +13,6 @@ Some libraries remain open as late as 7:00 PM, allowing students to plan their s
 However, studying with too much concentration can cause students to lose track of time and miss their next scheduled activities.  
 In addition, The system version 1.0 didn't show the estimated travel time and shortest path to each library.  
 The key solution of this system is to find libraries whose closing time is closest to but not later than the user’s preferred time, and also displaying the estimated travel time to each library.  
-I believe This solution allows students to stay focused on studying while still managing their schedule effectively.  
 
 ### Graph Structure
 About the Graph Structure.  
