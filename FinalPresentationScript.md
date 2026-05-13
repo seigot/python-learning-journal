@@ -90,7 +90,7 @@ The first challenge was building accurate map data.
 I converted real-world map into graph nodes manually, however mathematical conversion is more accurate and efficient.  
 The second challenge was smoothly adding Dijkstra’s algorithm to the existing system.  
 In the system version 1.0, The code size was already large. So to minimize the error of system integration,  
-I tested the graph algorithm independently before integrating it into the entire system.  
+I tested the graph algorithm independently before the integration.  
 
 ### Conclusion
 In conclusion, I designed and developed the Weekend Library Closing Time Finder system.  
